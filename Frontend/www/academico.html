@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <script src="cordova.js"></script>
+
+   <script src="js/app.js"></script>
+   <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+   <script src="js/jq110.min.js"></script>
+  </head>
+  <body ng-app="starter" ng-controller="PagsCtrl">
+
+
+    <ion-header-bar align-title="center" class="bar-assertive">
+      <h1 class="title ucon"><img src="img/logo-topo.png"></h1>
+
+    </ion-header-bar>
+
+    <ion-subheader-bar>
+      <div class="tabs-top tabs-background-assertive tabs-color-light">
+        <div class="tabs" ng-app="starter" ng-controller="PagsCtrl">
+          <a class="tab-item"  ng-click="abrir('home.html')">
+            <i class="icon ion-calendar"></i>
+            Eventos
+          </a>
+          <a class="tab-item active" ng-click="abrir('academico.html')">
+            <i class="icon ion-university"></i>
+            Acadêmico
+          </a>
+          <a class="tab-item" ng-click="abrir('bandejao.html')">
+            <i class="icon ion-fork"></i>
+            Bandejão
+          </a>
+          <a class="tab-item"  ng-click="abrir('reportar.html')">
+            <i class="icon ion-speakerphone"></i>
+            Reportar
+          </a>
+        </div>
+      </div>
+    </ion-subheader-bar>
+
+     <ion-content class="has-header has-subheader">
+
+        <ion-list>
+            <div class="list">
+           <script>
+                $(function () {
+                  $.getJSON(
+                    "http://hackathon-ufrj.herokuapp.com/api/ofertas",
+                    function (data) {
+                      var i;
+                      var output = "";
+                      data = data.oferta;
+                      var type = "";
+                      var ind;
+                      for(i in data){
+                        ind = data.length - i - 1 ;
+                        if(data[ind].type == 1)
+                          type = "Extensao";
+                        if(data[ind].type == 2)
+                          type = "Iniciacao Cientifica";
+                        if(data[ind].type == 3)
+                          type = "Estagio";
+                        output += '<a class="item item" href=""><h2>' +data[ind].name +'</h2><p style="color:red">'+ type+'</p><p>'+data[ind].desc+'</p></a>' ;
+                      }
+                      document.getElementById("ofertas").innerHTML = output;
+                    });
+                });
+              </script>
+                <div id="ofertas"></div>
+            </div>
+
+          </ion-list>
+
+    </ion-content>
+
+  </body>
+</html>

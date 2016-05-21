@@ -1,0 +1,193 @@
+var express = require('express');
+var router = express.Router();
+var knex = require('../dbconnect.js');
+
+var Bookshelf = require('bookshelf')(knex);
+
+//models
+var User = Bookshelf.Model.extend({
+    tableName: 'users',
+});
+
+var Party = Bookshelf.Model.extend({
+    tableName: 'partys'
+});
+
+//collections
+var Users = Bookshelf.Collection.extend({
+  model: User
+});
+
+var Partys = Bookshelf.Collection.extend({
+  model: Party
+});
+
+//USER API
+router.route('/users')
+  // fetch all users
+  .get(function (req, res) {
+    Users.forge()
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // create a user
+  .post(function (req, res) {
+    User.forge({
+      name: req.body.name,
+      fb_id: req.body.fb_id
+    })
+    .save()
+    .then(function (user) {
+      res.json({error: false, data: {id: user.get('id')}});
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    }); 
+  });
+
+router.route('/users/:id')
+  // fetch user
+  .get(function (req, res) {
+    User.forge({id: req.params.id})
+    .fetch()
+    .then(function (user) {
+      if (!user) {
+	res.status(404).json({error: true, data: {}});
+      }
+      else {
+	res.json({error: false, data: user.toJSON()});
+      }
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // update user details
+  .put(function (req, res) {
+    User.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (user) {
+      user.save({
+	name: req.body.name || user.get('name'),
+	fb_id: req.body.fb_id || user.get('fb_id')
+      })
+      .then(function () {
+	res.json({error: false, data: {message: 'User details updated'}});
+      })
+      .catch(function (err) {
+	res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // delete a user
+  .delete(function (req, res) {
+    User.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (user) {
+      user.destroy()
+      .then(function () {
+	res.json({error: true, data: {message: 'User successfully deleted'}});
+      })
+      .catch(function (err) {
+	res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+
+//PARTY API
+router.route('/partys')
+  // fetch all partys
+  .get(function (req, res) {
+    Partys.forge()
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // create a party
+  .post(function (req, res) {
+    Party.forge({
+      name: req.body.name,
+      fb_id: req.body.fb_id,
+      lat: req.body.lat,
+      long: req.body.long,
+    })
+    .save()
+    .then(function (user) {
+      res.json({error: false, data: {id: user.get('id')}});
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    }); 
+  });
+
+router.route('/partys/:id')
+  // fetch party
+  .get(function (req, res) {
+    Party.forge({id: req.params.id})
+    .fetch()
+    .then(function (user) {
+      if (!user) {
+	res.status(404).json({error: true, data: {}});
+      }
+      else {
+	res.json({error: false, data: user.toJSON()});
+      }
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // update party details
+  .put(function (req, res) {
+    Party.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (user) {
+      Party.save({
+	name: req.body.name || user.get('name'),
+	fb_id: req.body.fb_id || user.get('fb_id')
+      })
+      .then(function () {
+	res.json({error: false, data: {message: 'User details updated'}});
+      })
+      .catch(function (err) {
+	res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // delete a party
+  .delete(function (req, res) {
+    Party.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (user) {
+      Party.destroy()
+      .then(function () {
+	res.json({error: true, data: {message: 'User successfully deleted'}});
+      })
+      .catch(function (err) {
+	res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+
+module.exports = router;

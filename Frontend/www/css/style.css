@@ -1,0 +1,26 @@
+.scroll {
+    height: 100%;
+}
+ 
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.sel{
+	width: 100%;
+}
+
+@font-face {
+    font-family: ucon;
+    src: url("font/Festerbold.otf");
+}
+
+.ucon{
+	color: white;
+	font-family: ucon;
+	font-size: 25px !important;
+
+	/*
+	text-align: center;*/
+}

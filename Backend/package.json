@@ -1,0 +1,30 @@
+{
+  "name": "hack_ufrj",
+  "version": "1.0.0",
+  "description": "#Equipe \tLeonardo Menezes, Vinicius Veloso, Matheus Freire e  Gustavo Calonico",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheusrabelo/BackHackathonUFRJ.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matheusrabelo/BackHackathonUFRJ/issues"
+  },
+  "homepage": "https://github.com/matheusrabelo/BackHackathonUFRJ#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "bookshelf": "^0.9.5",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "knex": "^0.11.3",
+    "lodash": "^4.12.0",
+    "mime": "^1.3.4",
+    "mysql": "^2.10.2",
+    "when": "^3.7.7"
+  }
+}

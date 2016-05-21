@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <script src="cordova.js"></script>
+
+   <script src="js/app.js"></script>
+   <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+
+  </head>
+  <body ng-app="starter" ng-controller="PagsCtrl">
+
+   
+    <ion-header-bar align-title="center" class="bar-assertive">
+      <h1 class="title ucon"><img src="img/logo-topo.png"></h1>
+  
+    </ion-header-bar>
+
+    <ion-subheader-bar>
+      <div class="tabs-top tabs-background-assertive tabs-color-light">
+        <div class="tabs" ng-app="starter" ng-controller="PagsCtrl">
+          <a class="tab-item"  ng-click="abrir('home.html')">
+            <i class="icon ion-calendar"></i>
+            Eventos
+          </a>
+          <a class="tab-item" ng-click="abrir('academico.html')">
+            <i class="icon ion-university"></i>
+            Acadêmico
+          </a>
+          <a class="tab-item" ng-click="abrir('bandejao.html')">
+            <i class="icon ion-fork"></i>
+            Bandejão
+          </a>
+          <a class="tab-item active"  ng-click="abrir('reportar.html')">
+            <i class="icon ion-speakerphone"></i>
+            Reportar
+          </a>
+        </div>
+      </div>
+    </ion-subheader-bar>
+
+    <ion-content class="has-header has-subheader">
+      <h1 style="text-align: center;padding-top: 20%;">Reportado</h1>
+    </ion-content>
+
+  </body>
+</html>
